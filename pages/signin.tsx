@@ -43,7 +43,6 @@ const SignIn = () => {
                   }
                 }
               }}
-              method = "POST" 
               theme="light"
             />
           </div>
