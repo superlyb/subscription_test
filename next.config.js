@@ -19,17 +19,6 @@ const headersConfig = {
             value: "true",
           },
         ],
-        source: "https://chat-gpt-next-web-avre.vercel.app",
-        headers: [
-          {
-            key: "Access-Control-Allow-Origin",
-            value: "*",
-          },
-          {
-            key: "Access-Control-Allow-Credentials",
-            value: "true",
-          },
-        ],
       },
     ];
   },
