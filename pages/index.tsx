@@ -12,7 +12,11 @@ export default function PricingPage({ products }: Props) {
   return <Pricing products={products} />;
 }
 
-export async function getStaticProps(): Promise<GetStaticPropsResult<Props>> {
+export async function getStaticProps(params: { sessionId: string }): Promise<GetStaticPropsResult<Props>> {
+
+  const {sessionId} = params
+  console.error("sx",sessionId)
+  
   const products = await getActiveProductsWithPrices();
 
   return {
