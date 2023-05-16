@@ -205,7 +205,7 @@ const manageOneTimeStatus = async (
   let futureTimestamp = new Date();
       futureTimestamp.setDate(futureTimestamp.getDate() + 7);
   // Upsert the latest status of the subscription object.
-  const subscriptionData: Database['public']['Tables']['subscriptions']['Insert'] =
+  const subscriptionData: Database['public']['Tables']['one_time']['Insert'] =
     {
       id: subscriptionId,
       user_id: uuid,
@@ -227,7 +227,7 @@ const manageOneTimeStatus = async (
     };
 
   const { error } = await supabaseAdmin
-    .from('subscriptions')
+    .from('one_time')
     .upsert([subscriptionData]);
   if (error) throw error;
   console.log(
