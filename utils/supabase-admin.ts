@@ -180,7 +180,7 @@ const manageSubscriptionStatusChange = async (
 const manageOneTimeStatus = async (
   subscriptionId: string,
   customerId: string,
-  price_id:string,
+  price:number,
   createAction = false
 ) => {
   // Get customer's UUID from mapping table.
@@ -193,6 +193,14 @@ const manageOneTimeStatus = async (
 
   const { id: uuid } = customerData!;
 
+  const { data: pricedata, error: nopriceError } = await supabaseAdmin
+    .from('prices')
+    .select('id')
+    .eq('type', 'one_time')
+    .eq('unit_amount',price)
+    .single();
+
+    if (nopriceError) throw nopriceError;
   let currentTimestamp = new Date()
   let futureTimestamp = new Date();
       futureTimestamp.setDate(futureTimestamp.getDate() + 7);
@@ -203,7 +211,7 @@ const manageOneTimeStatus = async (
       user_id: uuid,
       metadata: '',
       status: 'trialing',
-      price_id: price_id,
+      price_id: pricedata.id,
       //TODO check quantity on subscription
       // @ts-ignore
       quantity: 1,

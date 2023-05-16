@@ -91,7 +91,7 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
                 await manageOneTimeStatus(
                 subscriptionId as string,
                 checkoutSession.customer as string,
-                checkoutSession.payment_intent as string,
+                checkoutSession.amount_total as number,
                 true
               );
               }
