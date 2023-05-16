@@ -6,7 +6,8 @@ import { stripe } from '@/utils/stripe';
 import {
   upsertProductRecord,
   upsertPriceRecord,
-  manageSubscriptionStatusChange
+  manageSubscriptionStatusChange,
+  manageOneTimeStatus
 } from '@/utils/supabase-admin';
 
 // Stripe requires the raw body to construct the event.
@@ -83,6 +84,17 @@ const webhookHandler = async (req: NextApiRequest, res: NextApiResponse) => {
                 checkoutSession.customer as string,
                 true
               );
+            }
+            else{
+              if (checkoutSession.mode === 'payment'){
+                const subscriptionId = checkoutSession.id;
+                await manageOneTimeStatus(
+                subscriptionId as string,
+                checkoutSession.customer as string,
+                checkoutSession.payment_intent as string,
+                true
+              );
+              }
             }
             break;
           default:
